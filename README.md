@@ -1,2 +1,3 @@
 # GameModuleManager
- 
+
+I created a **Game Module Manager** utilizing **Zenject** and a **Finite State Machine (FSM)** architecture to manage four separate game states: _Menu, Gameplay, Game Over, and Victory._ This system takes a modular approach to game state management, allowing for explicit transitions between states while yet retaining code organization and separation of responsibilities. Zenject integration allows for efficient dependency injection, which improves the modularity and testability of each game state. This organized method guarantees a scalable and maintainable framework for managing basic game states and transitions.
