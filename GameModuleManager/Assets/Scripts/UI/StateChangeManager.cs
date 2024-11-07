@@ -1,7 +1,6 @@
 using UnityEngine;
 using Zenject;
 using FSM.GameManager;
-
  
 namespace UI
 {
