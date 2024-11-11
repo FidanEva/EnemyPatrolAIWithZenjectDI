@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace RPG.BehaviourTree
 {
@@ -11,15 +12,17 @@ namespace RPG.BehaviourTree
         private EnemyController _enemyController;
         private CharacterController _characterController;
 
-        public void Init(EnemyController controller)
+        [Inject]
+        public void Construct(EnemyController enemyController, CharacterController characterController)
         {
-            _enemyController = controller;
+            _enemyController = enemyController;
+            _characterController = characterController;
         }
 
         protected override Node SetupTree()
         {
-            var checkIsDead = new CheckIsDead(_characterController);
-            var taskAttack = new TaskAttack(_characterController);
+            var checkIsDead = new CheckIsDead(_enemyController);
+            var taskAttack = new TaskAttack(_enemyController, _characterController);
             var checkTargetInRange = new CheckTargetInRange(
                 targetLayer, transform, fovRange);
 

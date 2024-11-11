@@ -1,35 +1,30 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 using FSM.GameManager.States;
-using TMPro;
 
 namespace FSM.GameManager
 {
     public class GameManager : MonoBehaviour
     {
         private GameStateFactory _gameStateFactory;
- 
+
         private GameStateEntity _gameStateEntity = null;
- 
-        [SerializeField]
+
         private GameState _currentGameState;
-        [SerializeField]
         private GameState _previousGameState;
- 
-        public TMP_Text stateText;
- 
+
         [Inject]
         public void Construct(GameStateFactory gameStateFactory)
         {
             _gameStateFactory = gameStateFactory;
         }
- 
+
         private void Start()
         {
             ChangeState(GameState.Menu);
+            DontDestroyOnLoad(this);
         }
- 
+
         /// <summary>
         /// Changes the game state
         /// </summary>
@@ -41,14 +36,16 @@ namespace FSM.GameManager
                 _gameStateEntity.Dispose();
                 _gameStateEntity = null;
             }
- 
+
             _previousGameState = _currentGameState;
             _currentGameState = gameState;
- 
-            stateText.text = gameState.ToString();
- 
+
             _gameStateEntity = _gameStateFactory.CreateState(gameState);
             _gameStateEntity.Start();
+        }
+        
+        public class Factory : PlaceholderFactory<GameManager>
+        {
         }
     }
 }

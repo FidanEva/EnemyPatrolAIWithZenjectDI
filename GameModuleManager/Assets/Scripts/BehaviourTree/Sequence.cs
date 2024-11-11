@@ -19,21 +19,21 @@ namespace RPG.BehaviourTree
             {
                 switch (child.Evaluate())
                 {
-                    case NodeState.RUNNING:
+                    case NodeState.Running:
                         anyChildRunning = true;
                         break;
-                    case NodeState.SUCCESS:
+                    case NodeState.Success:
                         break;
-                    case NodeState.FAILURE:
-                        _state = NodeState.FAILURE;
+                    case NodeState.Failure:
+                        _state = NodeState.Failure;
                         return _state;
                     default:
-                        _state = NodeState.SUCCESS;
+                        _state = NodeState.Success;
                         return _state;
                 }
             }
 
-            _state = anyChildRunning ? NodeState.RUNNING : NodeState.SUCCESS;
+            _state = anyChildRunning ? NodeState.Running : NodeState.Success;
             return _state;
         }
     }

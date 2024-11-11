@@ -19,7 +19,7 @@ namespace RPG.BehaviourTree
 
         public Node(List<Node> children)
         {
-            foreach (Node child in children)
+            foreach (var child in children)
                 Attach(child);
         }
 
@@ -38,11 +38,10 @@ namespace RPG.BehaviourTree
 
         public object GetData(string key)
         {
-            object value = null;
-            if (_dataContext.TryGetValue(key, out value))
+            if (_dataContext.TryGetValue(key, out var value))
                 return value;
 
-            Node node = Parent;
+            var node = Parent;
             while (node != null)
             {
                 value = node.GetData(key);
@@ -65,7 +64,7 @@ namespace RPG.BehaviourTree
             Node node = Parent;
             while (node != null)
             {
-                bool cleared = node.ClearData(key);
+                var cleared = node.ClearData(key);
                 if (cleared)
                     return true;
                 node = node.Parent;
@@ -77,8 +76,8 @@ namespace RPG.BehaviourTree
 
     public enum NodeState
     {
-        RUNNING,
-        SUCCESS,
-        FAILURE,
+        Running,
+        Success,
+        Failure,
     }
 }

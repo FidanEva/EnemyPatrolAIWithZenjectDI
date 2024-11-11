@@ -1,3 +1,4 @@
+using Character;
 using UnityEngine;
 
 namespace RPG.BehaviourTree
@@ -23,13 +24,13 @@ namespace RPG.BehaviourTree
             var colliders = Physics.OverlapSphere(_transform.position, _fovRange, _targetMask);
             if (colliders.Length > 0)
             {
-                Parent.Parent.SetData("target", colliders[0].transform);
+                Parent.Parent.SetData("Target", colliders[0].GetComponent<ICharacter>());
 
-                _state = NodeState.SUCCESS;
+                _state = NodeState.Success;
                 return _state;
             }
 
-            _state = NodeState.FAILURE;
+            _state = NodeState.Failure;
             return _state;
         }
     }

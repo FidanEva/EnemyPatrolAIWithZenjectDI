@@ -3,11 +3,13 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 using FSM.Helper;
- 
+using InputReader;
+
 namespace FSM.GameManager.States
 {
     public class VictoryState : GameStateEntity
     {
+        [Inject] private InputModule _inputModule;
         readonly AsyncProcessor _asyncProcessor;
         readonly GameManager _gameManager;
         readonly Settings _settings;
@@ -29,6 +31,7 @@ namespace FSM.GameManager.States
         public override void Start()
         {
             Debug.Log("VictoryState Started");
+            _inputModule.InputStrategy = new MenuInputStrategy() { InputModule = _inputModule };
             _asyncProcessor.StartCoroutine(ProceedToMenu());
         }
  

@@ -1,24 +1,25 @@
-using UnityEngine;
+using Character;
 
 namespace RPG.BehaviourTree
 {
     public class TaskAttack : Node
     {
-        private CharacterController _controller;
+        private ICharacter _attackFrom;
+        private ICharacter _attackTo;
 
-        public TaskAttack(CharacterController controller)
+        public TaskAttack(ICharacter attackFrom, ICharacter attackTp)
         {
-            _controller = controller;
+            _attackFrom = attackFrom;
+            _attackTo = attackTp;
         }
 
         public override NodeState Evaluate()
         {
-            Transform t = (Transform)GetData("target");
+            var target = (ICharacter)GetData("Target");
+            if (_attackTo == target)
+                _attackFrom.Attack(target);
 
-            if (t.TryGetComponent(out EnemyController target))
-                _controller.ProcessAttack(target);
-
-            _state = NodeState.RUNNING;
+            _state = NodeState.Running;
             return _state;
         }
     }
